@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotNetty.Buffers" Version="0.4.8" />
+    <PackageReference Include="DotNetty.Codecs" Version="0.4.8" />
+    <PackageReference Include="DotNetty.Codecs.Mqtt" Version="0.4.8" />
+    <PackageReference Include="DotNetty.Common" Version="0.4.8" />
+    <PackageReference Include="DotNetty.Handlers" Version="0.4.8" />
+    <PackageReference Include="DotNetty.Transport" Version="0.4.8" />
+    <PackageReference Include="DotNetty.Transport.Libuv" Version="0.4.8" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Echo.Codecs\Echo.Codecs\Echo.Codecs.csproj" />
+  </ItemGroup>
+</Project>
