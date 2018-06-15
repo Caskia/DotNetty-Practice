@@ -8,7 +8,9 @@ using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
 using Microsoft.Extensions.Logging.Console;
 using System;
+using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,6 +18,35 @@ namespace Echo.Client
 {
     internal class Program
     {
+        public static IPEndPoint GetIPEndPointFromHostName(string hostName, int port, AddressFamily? addressFamily = AddressFamily.InterNetwork, bool throwIfMoreThanOneIP = true)
+        {
+            var ipAddresses = Dns.GetHostAddresses(hostName);
+
+            if (addressFamily.HasValue)
+            {
+                ipAddresses = ipAddresses
+                    .Where(a => a.AddressFamily == addressFamily.Value)
+                    .ToArray();
+            }
+
+            if (ipAddresses.Length == 0)
+            {
+                throw new ArgumentException(
+                    "Unable to retrieve address from specified host name.",
+                    "hostName"
+                );
+            }
+            else if (throwIfMoreThanOneIP && ipAddresses.Length > 1)
+            {
+                throw new ArgumentException(
+                   "There is more that one IP address to the specified host.",
+                   "hostName"
+               );
+            }
+
+            return new IPEndPoint(ipAddresses.FirstOrDefault(), port);
+        }
+
         private static void Main(string[] args) => RunClientAsync().Wait();
 
         private static async Task RunClientAsync()
@@ -46,7 +77,9 @@ namespace Echo.Client
                         pipeline.AddLast("echo", new EchoClientHandler());
                     }));
 
-                var clientChannel = await bootstrap.ConnectAsync(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9998));
+                //var clientChannel = await bootstrap.ConnectAsync(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9998));
+
+                var clientChannel = await bootstrap.ConnectAsync(GetIPEndPointFromHostName("localhost", 9998, AddressFamily.InterNetwork, false));
 
                 while (true)
                 {

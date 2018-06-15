@@ -7,6 +7,7 @@ using DotNetty.Transport.Channels;
 using DotNetty.Transport.Libuv;
 using Microsoft.Extensions.Logging.Console;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Echo.Server
