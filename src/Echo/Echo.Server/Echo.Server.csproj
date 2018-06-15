@@ -15,4 +15,8 @@
     <PackageReference Include="DotNetty.Transport.Libuv" Version="0.4.8" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Echo.Codecs\Echo.Codecs\Echo.Codecs.csproj" />
+  </ItemGroup>
 </Project>
