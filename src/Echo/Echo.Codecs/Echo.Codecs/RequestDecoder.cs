@@ -20,11 +20,10 @@ namespace Echo.Codecs
             Stream inputStream = null;
             try
             {
-                inputStream = new ReadOnlyByteBufferStream(message, false);
-                var inputMemoryStream = new MemoryStream();
-                inputStream.CopyTo(inputMemoryStream);
+                var bytes = new byte[message.ReadableBytes];
+                message.ReadBytes(bytes);
 
-                var decoded = ObjectUtils.DeserializeFromStream(inputMemoryStream);
+                var decoded = bytes.ToObject();
 
                 output.Add(decoded);
             }

@@ -16,5 +16,16 @@ namespace Echo.Codecs
                 return ms.ToArray();
             }
         }
+
+        public static object ToObject(this byte[] data)
+        {
+            if (data == null)
+                return null;
+            BinaryFormatter bf = new BinaryFormatter();
+            using (MemoryStream ms = new MemoryStream(data))
+            {
+                return bf.Deserialize(ms);
+            }
+        }
     }
 }
