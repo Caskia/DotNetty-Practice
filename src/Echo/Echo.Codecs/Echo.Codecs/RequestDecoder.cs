@@ -17,7 +17,6 @@ namespace Echo.Codecs
                 return;
             }
 
-            Stream inputStream = null;
             try
             {
                 var bytes = new byte[message.ReadableBytes];
@@ -30,10 +29,6 @@ namespace Echo.Codecs
             catch (Exception exception)
             {
                 throw new CodecException(exception);
-            }
-            finally
-            {
-                inputStream?.Dispose();
             }
         }
     }
