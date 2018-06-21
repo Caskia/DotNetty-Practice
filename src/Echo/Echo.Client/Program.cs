@@ -1,4 +1,5 @@
 ﻿using DotNetty.Buffers;
+using DotNetty.Codecs;
 using DotNetty.Codecs.Mqtt;
 using DotNetty.Common.Internal.Logging;
 using DotNetty.Handlers.Logging;
@@ -8,6 +9,7 @@ using DotNetty.Transport.Channels.Sockets;
 using Echo.Codecs;
 using Microsoft.Extensions.Logging.Console;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -68,8 +70,8 @@ namespace Echo.Client
                         var pipeline = channel.Pipeline;
 
                         pipeline.AddLast(new LoggingHandler());
-                        //pipeline.AddLast("framing-enc", new LengthFieldPrepender(2));
-                        //pipeline.AddLast("framing-dec", new LengthFieldBasedFrameDecoder(ushort.MaxValue, 0, 2, 0, 2));
+                        pipeline.AddLast("framing-enc", new LengthFieldPrepender(2));
+                        pipeline.AddLast("framing-dec", new LengthFieldBasedFrameDecoder(ushort.MaxValue, 0, 2, 0, 2));
                         //pipeline.AddLast("mqtt-encoder", new MqttEncoder());
                         //pipeline.AddLast("mqtt-decoder", new MqttDecoder(true, 256 * 1024));
                         //pipeline.AddLast("string-encoder", new StringEncoder());
